@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coding train : Date/APIs 1</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+        <h1>Coding train demo : Fetch</h1>
+        <div>
+            <p>
+                <a href="https://www.youtube.com/watch?v=tc8DU14qX6I">1.1 fetch() - working with data & APIs in javascript></a>
+                <br />
+            </p>
+        </div>
+    <div>
+       
+        </div> 
+        <div class="card">
+            <img src="" id="rainbow" width="480px"/>
+        </div>
+        <div class="card">
+            <img src="" id="anotherrainbow" width="480px"/>
+        </div>
+        <div class="card">
+                <img src="" id="catrainbow" width="480px"/>
+        </div>
+    </div>
+
+    <script>
+/*
+        console.log('about to fetch a rainbow');
+        fetch('/rainbow.jpeg').then(response => { // fetch rainbow, then do something with the response
+        console.log(response); // show the response in the console
+        return response.blob(); // return the response as a blob
+
+        })
+        .then(blob => { // then take the newly converted response as a blob and
+            console.log("taking the returned blob response:")
+            console.log(blob); // lets see the blob in the console log
+            // now print rainbow, but we need to extract the file name to use in the <img>tag
+            document.getElementById('rainbow').src = URL.createObjectURL(blob);
+            
+        })
+         .catch(error => {
+            console.log('error occured!!!111oneoneoleven');
+            console.error(error);
+        });
+*/
+
+// async / await way with error handling
+
+        console.log('about to fetch a rainbow');
+
+        catchRainbow()
+        .then(response => { // this runs once there is a response eventually returned from the catchrainbow funciton
+            console.log('Request complete'); 
+        })
+        .catch(error => {
+            console.log('error occured!!!111oneoneoleven');
+            console.error(error);
+        }); // call the function below
+
+        async function catchRainbow() { // could use arrow =>
+            const response = await fetch('/rainbow.jpeg'); // wait for the picture to fetch, then put the data in response variable
+            const blob = await response.blob(); // wait for the picture to be converted to a blob then put it in blob variable
+            document.getElementById('rainbow').src = URL.createObjectURL(blob);
+
+            const anotherRainbowResponse = await fetch('/rainbow2.jpg'); // wait for the picture to fetch, then put the data in response variable
+            const anotherBlob = await anotherRainbowResponse.blob(); // wait for the picture to be converted to a blob then put it in blob variable
+            document.getElementById('anotherrainbow').src = URL.createObjectURL(anotherBlob);
+
+            const catRainbowResponse = await fetch('/catrainbow.gif'); // wait for the picture to fetch, then put the data in response variable
+            const catBlob = await catRainbowResponse.blob(); // wait for the picture to be converted to a blob then put it in blob variable
+            document.getElementById('catrainbow').src = URL.createObjectURL(catBlob);
+
+            }
+       
+
+
+
+
+
+    </script>   
+</body>
+
+</html>
