@@ -1,6 +1,9 @@
 <!--
 start a server in the command line by going to the project directory and typing
 python -m http.server
+
+data for zonal annual means data is coming from https://data.giss.nasa.gov/gistemp/ in a csv file
+
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +19,40 @@ python -m http.server
     <a href="https://www.youtube.com/watch?v=RfMkdvN-23o">Tabular data video</a>
 
     <script>
+
+        getData(); // call the getData JS function to read the csv file
+
+        //
+        // JS FUNCTIONS
+        //
+
+        // get the csv file data
+        async function getData() { // this is an asynchronous function that will wait to get the data
+            const response = await fetch('ZonAnn.Ts+dSST.csv'); // read the file and return the response when the file is read
+            const data = await response.text(); // once the response grabs the data, throw it into text format and call it 'data'
+            console.log(data); // view the data in the console log
+
+            const table = data.split('\n').slice(1); // split into rows at the line return, then slice off the first row since it
+                                                    // just has header info that is only good for humans to read
+
+            // console.log(rows); // show the newly split rows.
+
+            //
+            // now we only need the first 2 elements in the row. the year, and the mean GLOBAL temperature which is the first element after the year
+            //
+
+            table.forEach(elementInRow => {
+                const column = elementInRow.split(','); // split each of the elements in each row by the comma
+
+                const year = column[0]; // first element in each row will be the year
+                const gTemperature = column[1]; // the global temperature mean is in the element after the year (we just get teh data in the first 2 rows)
+                console.log(year, gTemperature);
+
+
+            });
+
+        }
+
 
     </script>
 </body>
